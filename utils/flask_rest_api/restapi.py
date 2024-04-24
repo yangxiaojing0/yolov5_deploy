@@ -39,11 +39,16 @@ def predict(model):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Flask API exposing YOLOv5 model")
-    parser.add_argument("--port", default=5000, type=int, help="port number")
+    parser.add_argument("--port", default=8801, type=int, help="port number")
     parser.add_argument("--model", nargs="+", default=["yolov5s"], help="model(s) to run, i.e. --model yolov5n yolov5s")
     opt = parser.parse_args()
 
     for m in opt.model:
-        models[m] = torch.hub.load("ultralytics/yolov5", m, force_reload=True, skip_validation=True)
+        # models[m] = torch.hub.load("ultralytics/yolov5", m, force_reload=True, skip_validation=True) # 在线下载
+        models[m] = torch.hub.load("./yolov5_deploy", m, source='local',force_reload=False, skip_validation=True) # 离线加载
 
     app.run(host="0.0.0.0", port=opt.port)  # debug=True causes Restarting with stat
+    
+    
+    # usage
+    # python /workspace/yolov5_deploy/utils/flask_rest_api/restapi.py --port 8801

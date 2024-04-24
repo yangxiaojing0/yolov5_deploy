@@ -95,7 +95,7 @@ def yolov5n(pretrained=True, channels=3, classes=80, autoshape=True, _verbose=Tr
     return _create("yolov5n", pretrained, channels, classes, autoshape, _verbose, device)
 
 
-def yolov5s(pretrained=True, channels=3, classes=80, autoshape=True, _verbose=True, device=None):
+def yolov5s(pretrained=True, channels=3, classes=80, autoshape=True, _verbose=True, device='0'):
     """Creates YOLOv5-small model with options for pretraining, input channels, class count, autoshaping, verbosity, and
     device.
     """
