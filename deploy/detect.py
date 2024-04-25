@@ -187,3 +187,10 @@ if __name__ == '__main__':
     a = 2  # 采样间隔
     camera_detect(save_path, a, detect=True, show_img=True,save_img=True,show_time=True)
     
+    '''服务器检测'''
+    # print_page(CLOUD_DETECTION_URL)
+    # save_path = r"./camera"  # 保存路径
+    # Path(save_path).mkdir(exist_ok=True,parents=True)
+    # a = 2  # 采样间隔
+    # camera_detect(save_path, a, detect=True, show_img=True,save_img=True,show_time=True)
+    
