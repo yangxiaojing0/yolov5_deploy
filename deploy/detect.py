@@ -10,7 +10,8 @@ import requests
 
 from color import Colors
 
-DETECTION_URL = "http://222.28.54.95:8801/v1/object-detection/yolov5s"
+LOCAL_DETECTION_URL = "http://222.28.54.95:8801/v1/object-detection/yolov5s"
+CLOUD_DETECTION_URL = "http://222.28.54.95:8801/v1/object-detection/yolov5s"
 
 
 def draw_box_to_img(img,result):
@@ -67,7 +68,7 @@ def detection_request(test_image,show_img=False,save_json_dir=None,save_img_dir=
         test_image_name=f'{ret}.jpg'
         test_stem=f'{ret}'
         
-    response = requests.post(DETECTION_URL, files={"image": image_data}).json()
+    response = requests.post(LOCAL_DETECTION_URL, files={"image": image_data}).json()
     
     result={test_image_name:response}
     pprint.pprint(result)
@@ -149,7 +150,26 @@ def camera_detect(save_path, interval=5,detect=True, show_img=True, save_img=Tru
     # 释放摄像头和窗口资源qq
     cap.release()
     cv2.destroyAllWindows()       
-            
+
+
+def print_page(URL):
+    if URL==LOCAL_DETECTION_URL:
+        print('**********************************************')
+        print('*****                                    *****')
+        print('                将在本地进行检测                ')
+        print('*****                                    *****')
+        print('**********************************************')
+        
+    elif URL==CLOUD_DETECTION_URL:
+        print('**********************************************')
+        print('*****                                    *****')
+        print('                将在服务器进行检测               ')
+        print('*****                                    *****')
+        print('**********************************************')
+    else:
+        raise ValueError('URL错误')
+        
+    
 if __name__ == '__main__':
     '''单张图片检测'''
     # test_image = "test_img/bus.jpg"
@@ -161,6 +181,7 @@ if __name__ == '__main__':
     # detection_request(test_image,save_json_dir=save_json_dir,save_img_dir=save_img_dir,show_img=True)
     
     '''本地camera检测'''
+    print_page(LOCAL_DETECTION_URL)
     save_path = r"./camera"  # 保存路径
     Path(save_path).mkdir(exist_ok=True,parents=True)
     a = 2  # 采样间隔
